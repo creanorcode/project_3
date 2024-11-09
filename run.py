@@ -25,3 +25,14 @@ def get_board_size():
 def choose_ships(size):
     max_ships = {5: (2, 3), 8: (3, 4), 10: (4, 5), 12:(5, 7)}
     min_ships, max_ships = max_ships[size]
+    while True:
+        try:
+            num_ships = int(input(f"Välj antal skepp (mellan {min_ships} och {max_ships}): "))
+            if min_ships <= num_ships <= max_ships:
+                return dict(list(POSSIBLE_SHIPS[size].items())[:num_ships])
+            else:
+                print(f"Ange ett antal mellan {min_ships} och {max_ships}.")
+        except ValueError:
+            print("Ogiltig inmatning: Ange ett heltal.")
+
+def create_board(size):
