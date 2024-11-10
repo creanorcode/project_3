@@ -36,3 +36,14 @@ def choose_ships(size):
             print("Ogiltig inmatning: Ange ett heltal.")
 
 def create_board(size):
+    return [['~' for _ in range(size)] for _ in range(size)]
+
+def print_board(board, reveal=False):
+    size = len(board)
+    print("  " + " ".join(str(i) for i in range(size)))
+    for i, row in enumerate(board):
+        row_display = []
+        for cell in row:
+            row_display.append(cell if reveal or cell in ['X', '0'] else '~')
+        print(f"{i} " + " ".join(row_display))
+        
