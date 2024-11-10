@@ -46,4 +46,30 @@ def print_board(board, reveal=False):
         for cell in row:
             row_display.append(cell if reveal or cell in ['X', '0'] else '~')
         print(f"{i} " + " ".join(row_display))
-        
+
+def place_ship_manually(board, ship_type, length):
+    size = len(board)
+    print(f"\nPlacera skeppet '{ship_type}' som är {length} rutor långt.")
+    placed = False
+    while not placed:
+        try:
+            row, col = map(int, input("Ange startposition för skeppet (rad kolumn): ").split())
+            direction = input("Ange riktning  (h för horisontell, v för vertikal): ").lower()
+            if direction == 'h' and col + length <= size:
+                if all(board[row][col + i] == '~' for i in range(length)):
+                    for i in range(length):
+                        board[row][col + i] = ship_type
+                    placed = True
+                else:
+                    print("Platsen är redan upptagen. Försök igen.")
+            elif direction == 'v' and row + length <= size:
+                if all(board[row + i][col] == '~' for i in range(length)):
+                    for i in range(length):
+                        board[row + i][col] = ship_type
+                    placed = True
+                else:
+                    print("Platsen är redan upptagen. Försök igen.")
+            else:
+                print("Ogiltig position eller riktning. Försök igen.")
+        except (ValueError, IndexError):
+            print("Felaktig inmatning! Försök igen.")
