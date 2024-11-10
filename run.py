@@ -73,3 +73,30 @@ def place_ship_manually(board, ship_type, length):
                 print("Ogiltig position eller riktning. Försök igen.")
         except (ValueError, IndexError):
             print("Felaktig inmatning! Försök igen.")
+
+def place_all_ships_manually(board, ships):
+    for ship, length in ships.items():
+        print_board(board, reveal=True)
+        place_ship_manually(board, ship, length)
+
+def place_ship_computer(board, length):
+    size = len(board)
+    placed = False
+    while not placed:
+        direction = random.choice(['horizontal', 'vertical'])
+        if direction == 'horizontal':
+            row, col = random.randint(0, size - 1), random.randint(0, size - length)
+            if all(board[row][col + 1] == '~' for i in range(length)):
+                for i in range(length):
+                    board[row][col + i] = 'S'
+                placed = True
+        else:
+            row, col = random.randint(0, size - length), random.randint(0, size - 1)
+            if all(board[row + i][col] == '~' for i in range(length)):
+                for i in range(length):
+                    board[row + i][col] = 'S'
+                placed = True
+
+def place_all_ships_computer(board, ships):
+    for ship, length in ships.items():
+        place_ship_computer(board, length)
