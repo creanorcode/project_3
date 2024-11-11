@@ -100,3 +100,22 @@ def place_ship_computer(board, length):
 def place_all_ships_computer(board, ships):
     for ship, length in ships.items():
         place_ship_computer(board, length)
+
+def player_turn(board):
+    print("\nDin tur! Använd formatet rad kolumn (t.ex. 2 3)")
+    try:
+        row, col = map(int, input("Ange rad och kolumn: ").split())
+        if board[row][col] in POSSIBLE_SHIPS[5].keys():
+            board[row][col] = 'X'
+            print("Träff!")
+            return True
+        elif board[row][col] == '~':
+            board[row][col] = '0'
+            print("Miss!")
+            return False
+        else:
+            print("Redan använt! Försök igen.")
+            return player_turn(board)
+    except (ValueError, IndexError):
+        print("Felaktig inmatning! Försök igen.")
+        return player_turn(board)
