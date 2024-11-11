@@ -136,3 +136,35 @@ def computer_turn(board):
 
 def check_win(board, ship):
     return all(cell not in ships.keys() for row in board for cell in row)
+
+def main():
+    print("Välkommen till Battleship!")
+    board_size = get_board_size()
+    player_board = create_board(board_size)
+    computer_board = create_board(board_size)
+
+    # Välj skepp baserat på brädstorleken
+    selected_ships = choose_ships(board_size)
+
+    # PLacera spelarnas skepp
+    place_all_ships_manually(player_board, selected_ships)
+    place_all_ships_computer(computer_board, selected_ships)
+
+    while True:
+        print("\nDitt bräde:")
+        print_board(player_board, reveal=True)
+        print("\Datorns bräde:")
+        print_board(computer_board)
+
+        if player_turn(computer_board):
+            if check_win(computer_board, selected_ships):
+                print("Grattis! Du har besegrat datorn!")
+                break
+        
+        if computer_turn(player_board):
+            if check_win(player_board, selected_ships):
+                print("Datorn vann! Bättre lycka nästa gång!")
+                break
+
+if __name__ == "__main__":
+    main()
