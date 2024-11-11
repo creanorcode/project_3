@@ -119,3 +119,17 @@ def player_turn(board):
     except (ValueError, IndexError):
         print("Felaktig inmatning! Försök igen.")
         return player_turn(board)
+
+def computer_turn(board):
+    size = len(board)
+    row, col = random.randint(0, size - 1), random.randint(0, size - 1)
+    while board[row][col] in ['X', 'O']:
+        row, col = random.randint(0, size - 1), random.randint(0, size - 1)
+    if board[row][col] in POSSIBLE_SHIPS[5].keys():
+        board[row][col] = 'X'
+        print(f"Datorn träffade på {row} {col}!")
+        return True
+    else:
+        board[row][col] = 'O'
+        print(f"Datorn missade på {row} {col}.")
+        return False
