@@ -10,6 +10,7 @@ POSSIBLE_SHIPS = {
     10: {'S': 2, 'D': 3, 'C': 4, 'B': 5}, # 10x10: 4-5 ships, längder 2-5
     12: {'S': 2, 'D': 3, 'C': 4, 'B': 5} # 12x12: 5-7 ships, längder 2-5
 }
+
 # Player have to choose a gameboard size.
 def get_board_size():
     while True:
@@ -21,6 +22,7 @@ def get_board_size():
                 print("Ange ett giltigt val: 5, 8, 10 eller 12.")
         except ValueError:
             print("Ogiltig inmatning! Ange ett nummer mellan 5 och 12.")
+
 # Player choose amont of ships to the boardsize player have chosen.
 def choose_ships(size):
     max_ships = {5: (2, 3), 8: (3, 4), 10: (4, 5), 12:(5, 7)}
@@ -34,9 +36,11 @@ def choose_ships(size):
                 print(f"Ange ett antal mellan {min_ships} och {max_ships}.")
         except ValueError:
             print("Ogiltig inmatning: Ange ett heltal.")
+
 # The creation av the board
 def create_board(size):
     return [['~' for _ in range(size)] for _ in range(size)]
+
 # The board will be printed to the screen
 def print_board(board, reveal=False):
     size = len(board)
@@ -46,6 +50,7 @@ def print_board(board, reveal=False):
         for cell in row:
             row_display.append(cell if reveal or cell in ['X', '0'] else '~')
         print(f"{i} " + " ".join(row_display))
+
 # Code for placing ships: allows the player to select positions for their ships,
 def place_ship_manually(board, ship_type, length):
     size = len(board)
@@ -73,11 +78,13 @@ def place_ship_manually(board, ship_type, length):
                 print("Ogiltig position eller riktning. Försök igen.")
         except (ValueError, IndexError):
             print("Felaktig inmatning! Försök igen.")
+
 # and the program will place them accordingly.
 def place_all_ships_manually(board, ships):
     for ship, length in ships.items():
         print_board(board, reveal=True)
         place_ship_manually(board, ship, length)
+
 # Code for placing the computers ships,
 def place_ship_computer(board, length):
     size = len(board)
@@ -96,10 +103,12 @@ def place_ship_computer(board, length):
                 for i in range(length):
                     board[row + i][col] = 'S'
                 placed = True
+
 # and the program will place the computers ships.
 def place_all_ships_computer(board, ships):
     for ship, length in ships.items():
         place_ship_computer(board, length)
+
 # Code that handles the player's turn to choose a target
 def player_turn(board):
     print("\nDin tur! Använd formatet rad kolumn (t.ex. 2 3)")
@@ -119,6 +128,7 @@ def player_turn(board):
     except (ValueError, IndexError):
         print("Felaktig inmatning! Försök igen.")
         return player_turn(board)
+
 # Code that handles the computer's turn to choose a target.
 def computer_turn(board):
     size = len(board)
@@ -133,10 +143,12 @@ def computer_turn(board):
         board[row][col] = 'O'
         print(f"Datorn missade på {row} {col}.")
         return False
+
 # Function to check if all ships have been hit, indicating a win.
 # Returns True if no cells with ships remain on the board.
 def check_win(board, ship):
     return all(cell not in ships.keys() for row in board for cell in row)
+
 
 def main():
     print("Välkommen till Battleship!")
@@ -151,21 +163,25 @@ def main():
     place_all_ships_manually(player_board, selected_ships)
     place_all_ships_computer(computer_board, selected_ships)
 
+
     while True:
         print("\nDitt bräde:")
         print_board(player_board, reveal=True)
         print("\Datorns bräde:")
         print_board(computer_board)
 
+
         if player_turn(computer_board):
             if check_win(computer_board, selected_ships):
                 print("Grattis! Du har besegrat datorn!")
                 break
         
+
         if computer_turn(player_board):
             if check_win(player_board, selected_ships):
                 print("Datorn vann! Bättre lycka nästa gång!")
                 break
+
 
 if __name__ == "__main__":
     main()
