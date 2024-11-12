@@ -100,7 +100,7 @@ def place_ship_computer(board, length):
 def place_all_ships_computer(board, ships):
     for ship, length in ships.items():
         place_ship_computer(board, length)
-
+# Code that handles the player's turn to choose a target
 def player_turn(board):
     print("\nDin tur! Använd formatet rad kolumn (t.ex. 2 3)")
     try:
