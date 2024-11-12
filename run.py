@@ -157,10 +157,10 @@ def main():
     player_board = create_board(board_size)
     computer_board = create_board(board_size)
 
-    # Välj skepp baserat på brädstorleken
+    # Selects the ships based on the chosen board size.
     selected_ships = choose_ships(board_size)
 
-    # PLacera spelarnas skepp
+    # Places all ships manually on the player's board and automatically on the computer's board.
     place_all_ships_manually(player_board, selected_ships)
     place_all_ships_computer(computer_board, selected_ships)
 
