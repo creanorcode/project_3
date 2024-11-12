@@ -34,10 +34,10 @@ def choose_ships(size):
                 print(f"Ange ett antal mellan {min_ships} och {max_ships}.")
         except ValueError:
             print("Ogiltig inmatning: Ange ett heltal.")
-
+# The creation av the board
 def create_board(size):
     return [['~' for _ in range(size)] for _ in range(size)]
-
+# The board will be printed to the screen
 def print_board(board, reveal=False):
     size = len(board)
     print("  " + " ".join(str(i) for i in range(size)))
