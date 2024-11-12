@@ -10,7 +10,7 @@ POSSIBLE_SHIPS = {
     10: {'S': 2, 'D': 3, 'C': 4, 'B': 5}, # 10x10: 4-5 ships, längder 2-5
     12: {'S': 2, 'D': 3, 'C': 4, 'B': 5} # 12x12: 5-7 ships, längder 2-5
 }
-
+# Player have to choose a gameboard size.
 def get_board_size():
     while True:
         try:
@@ -21,7 +21,7 @@ def get_board_size():
                 print("Ange ett giltigt val: 5, 8, 10 eller 12.")
         except ValueError:
             print("Ogiltig inmatning! Ange ett nummer mellan 5 och 12.")
-
+# Player choose amont of ships to the boardsize player have chosen.
 def choose_ships(size):
     max_ships = {5: (2, 3), 8: (3, 4), 10: (4, 5), 12:(5, 7)}
     min_ships, max_ships = max_ships[size]
