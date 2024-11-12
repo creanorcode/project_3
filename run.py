@@ -133,7 +133,8 @@ def computer_turn(board):
         board[row][col] = 'O'
         print(f"Datorn missade på {row} {col}.")
         return False
-
+# Function to check if all ships have been hit, indicating a win.
+# Returns True if no cells with ships remain on the board.
 def check_win(board, ship):
     return all(cell not in ships.keys() for row in board for cell in row)
 
