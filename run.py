@@ -46,7 +46,7 @@ def print_board(board, reveal=False):
         for cell in row:
             row_display.append(cell if reveal or cell in ['X', '0'] else '~')
         print(f"{i} " + " ".join(row_display))
-
+# Player will place the ships to the board.
 def place_ship_manually(board, ship_type, length):
     size = len(board)
     print(f"\nPlacera skeppet '{ship_type}' som är {length} rutor långt.")
@@ -73,7 +73,7 @@ def place_ship_manually(board, ship_type, length):
                 print("Ogiltig position eller riktning. Försök igen.")
         except (ValueError, IndexError):
             print("Felaktig inmatning! Försök igen.")
-
+# The Players ships will be placed on the board.
 def place_all_ships_manually(board, ships):
     for ship, length in ships.items():
         print_board(board, reveal=True)
