@@ -119,7 +119,7 @@ def player_turn(board):
     except (ValueError, IndexError):
         print("Felaktig inmatning! Försök igen.")
         return player_turn(board)
-
+# Code that handles the computer's turn to choose a target.
 def computer_turn(board):
     size = len(board)
     row, col = random.randint(0, size - 1), random.randint(0, size - 1)
