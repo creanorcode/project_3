@@ -78,7 +78,7 @@ def place_all_ships_manually(board, ships):
     for ship, length in ships.items():
         print_board(board, reveal=True)
         place_ship_manually(board, ship, length)
-
+# Code for placing the computers ships,
 def place_ship_computer(board, length):
     size = len(board)
     placed = False
@@ -96,7 +96,7 @@ def place_ship_computer(board, length):
                 for i in range(length):
                     board[row + i][col] = 'S'
                 placed = True
-
+# and the program will place the computers ships.
 def place_all_ships_computer(board, ships):
     for ship, length in ships.items():
         place_ship_computer(board, length)
