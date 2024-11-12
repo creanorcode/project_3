@@ -172,7 +172,8 @@ def main():
         print("\Datorns bräde:")
         print_board(computer_board)
 
-
+        # Checks if the player's turn results in a hit on the computer's board.
+        # If the player has hit all of the computer's ships, a winning message is displayed, and the game ends.
         if player_turn(computer_board):
             if check_win(computer_board, selected_ships):
                 print("Grattis! Du har besegrat datorn!")
