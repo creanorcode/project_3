@@ -149,7 +149,8 @@ def computer_turn(board):
 def check_win(board, ship):
     return all(cell not in ships.keys() for row in board for cell in row)
 
-
+# Main function to start the Battleship game.
+# Greets the player, sets the board size, and creates the player and computer boards.
 def main():
     print("Välkommen till Battleship!")
     board_size = get_board_size()
