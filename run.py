@@ -164,7 +164,8 @@ def main():
     place_all_ships_manually(player_board, selected_ships)
     place_all_ships_computer(computer_board, selected_ships)
 
-
+    # Enters a loop to display both the player's board and the computer's board.
+    # The player's board is shown with all ships revealed, while the computer's board hides the ships.
     while True:
         print("\nDitt bräde:")
         print_board(player_board, reveal=True)
