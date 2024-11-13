@@ -186,6 +186,6 @@ def main():
                 print("Datorn vann! Bättre lycka nästa gång!")
                 break
 
-
+# Checks if the script is being run directly and, if so, starts the main function.
 if __name__ == "__main__":
     main()
