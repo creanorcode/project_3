@@ -65,6 +65,12 @@ def place_ship_manually(board, ship_type, length):
         try:
             row, col = map(int, input("Enter the starting position for the ship (row column): ").split())
             direction = input("Enter direction (h for horizontal, v for vertical): ").lower()
+
+            # Validate if row and colare within bounds
+            if row < 0 or row >= size or col < 0 or col >= size:
+                print("Position out of bounds! Enter values within the board size.")
+                continue
+            
             if direction == 'h' and col + length <= size:
                 if all(board[row][col + i] == EMPTY_CELL for i in range(length)):
                     for i in range(length):
