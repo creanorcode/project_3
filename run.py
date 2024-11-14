@@ -3,6 +3,7 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 import random
 
+# Constants for symbols
 EMPTY_CELL = '~'
 HIT_CELL = 'X'
 MISS_CELL = 'O'
