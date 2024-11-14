@@ -169,7 +169,7 @@ def main():
     while True:
         print("\nYour board:")
         print_board(player_board, reveal=True)
-        print("\Computer's board:")
+        print("\nComputer's board:")
         print_board(computer_board)
 
         # Checks if the player's turn results in a hit on the computer's board.
