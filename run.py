@@ -3,6 +3,10 @@
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 import random
 
+EMPTY_CELL = '~'
+HIT_CELL = 'X'
+MISS_CELL = 'O'
+
 #Possible ship types and their length
 POSSIBLE_SHIPS = {
     5: {'S': 1, 'D': 2, 'C': 3}, # 5x5: 2-3 ships, length 1-3
@@ -39,7 +43,7 @@ def choose_ships(size):
 
 # The creation av the board
 def create_board(size):
-    return [['~' for _ in range(size)] for _ in range(size)]
+    return [[EMPTY_CELL for _ in range(size)] for _ in range(size)]
 
 # The board will be printed to the screen
 def print_board(board, reveal=False):
@@ -48,7 +52,7 @@ def print_board(board, reveal=False):
     for i, row in enumerate(board):
         row_display = []
         for cell in row:
-            row_display.append(cell if reveal or cell in ['X', '0'] else '~')
+            row_display.append(cell if reveal or cell in [HIT_CELL, MISS_CELL] else EMPTY_CELL)
         print(f"{i} " + " ".join(row_display))
 
 # Code for placing ships: allows the player to select positions for their ships,
@@ -61,14 +65,14 @@ def place_ship_manually(board, ship_type, length):
             row, col = map(int, input("Enter the starting position for the ship (row column): ").split())
             direction = input("Enter direction (h for horizontal, v for vertical): ").lower()
             if direction == 'h' and col + length <= size:
-                if all(board[row][col + i] == '~' for i in range(length)):
+                if all(board[row][col + i] == EMPTY_CELL for i in range(length)):
                     for i in range(length):
                         board[row][col + i] = ship_type
                     placed = True
                 else:
                     print("The location is already occupied. Try again.")
             elif direction == 'v' and row + length <= size:
-                if all(board[row + i][col] == '~' for i in range(length)):
+                if all(board[row + i][col] == EMPTY_CELL for i in range(length)):
                     for i in range(length):
                         board[row + i][col] = ship_type
                     placed = True
@@ -93,13 +97,13 @@ def place_ship_computer(board, length):
         direction = random.choice(['horizontal', 'vertical'])
         if direction == 'horizontal':
             row, col = random.randint(0, size - 1), random.randint(0, size - length)
-            if all(board[row][col + i] == '~' for i in range(length)):
+            if all(board[row][col + i] == EMPTY_CELL for i in range(length)):
                 for i in range(length):
                     board[row][col + i] = 'S'
                 placed = True
         else:
             row, col = random.randint(0, size - length), random.randint(0, size - 1)
-            if all(board[row + i][col] == '~' for i in range(length)):
+            if all(board[row + i][col] == EMPTY_CELL for i in range(length)):
                 for i in range(length):
                     board[row + i][col] = 'S'
                 placed = True
@@ -115,11 +119,11 @@ def player_turn(board):
     try:
         row, col = map(int, input("Enter row and column: ").split())
         if board[row][col] in POSSIBLE_SHIPS[5].keys():
-            board[row][col] = 'X'
+            board[row][col] = HIT_CELL
             print("Hit!")
             return True
-        elif board[row][col] == '~':
-            board[row][col] = 'O'
+        elif board[row][col] == EMPTY_CELL:
+            board[row][col] = MISS_CELL
             print("Miss!")
             return False
         else:
@@ -133,14 +137,14 @@ def player_turn(board):
 def computer_turn(board):
     size = len(board)
     row, col = random.randint(0, size - 1), random.randint(0, size - 1)
-    while board[row][col] in ['X', 'O']:
+    while board[row][col] in [HIT_CELL, MISS_CELL]:
         row, col = random.randint(0, size - 1), random.randint(0, size - 1)
     if board[row][col] in POSSIBLE_SHIPS[5].keys():
-        board[row][col] = 'X'
+        board[row][col] = HIT_CELL
         print(f"The computer hit at {row} {col}!")
         return True
     else:
-        board[row][col] = 'O'
+        board[row][col] = MISS_CELL
         print(f"The computer missed at {row} {col}.")
         return False
 
