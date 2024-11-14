@@ -25,7 +25,7 @@ def get_board_size():
 
 # Player choose amont of ships to the boardsize player have chosen.
 def choose_ships(size):
-    max_ships = {5: (2, 3), 8: (3, 4), 10: (4, 5), 12:(5, 7)}
+    max_ships = {5: (2, 3), 8: (3, 4), 10: (4, 5), 12: (5, 7)}
     min_ships, max_ships = max_ships[size]
     while True:
         try:
@@ -93,7 +93,7 @@ def place_ship_computer(board, length):
         direction = random.choice(['horizontal', 'vertical'])
         if direction == 'horizontal':
             row, col = random.randint(0, size - 1), random.randint(0, size - length)
-            if all(board[row][col + 1] == '~' for i in range(length)):
+            if all(board[row][col + i] == '~' for i in range(length)):
                 for i in range(length):
                     board[row][col + i] = 'S'
                 placed = True
@@ -119,7 +119,7 @@ def player_turn(board):
             print("Hit!")
             return True
         elif board[row][col] == '~':
-            board[row][col] = '0'
+            board[row][col] = 'O'
             print("Miss!")
             return False
         else:
@@ -146,7 +146,7 @@ def computer_turn(board):
 
 # Function to check if all ships have been hit, indicating a win.
 # Returns True if no cells with ships remain on the board.
-def check_win(board, ship):
+def check_win(board, ships):
     return all(cell not in ships.keys() for row in board for cell in row)
 
 # Main function to start the Battleship game.
