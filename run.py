@@ -63,32 +63,46 @@ def place_ship_manually(board, ship_type, length):
     placed = False
     while not placed:
         try:
+            # Input start position
             row, col = map(int, input("Enter the starting position for the ship (row column): ").split())
-            direction = input("Enter direction (h for horizontal, v for vertical): ").lower()
 
-            # Validate if row and colare within bounds
+            # Check if the start position is within bounds
             if row < 0 or row >= size or col < 0 or col >= size:
-                print("Position out of bounds! Enter values within the board size.")
+                print("The starting position is out of bounds. Try again.")
                 continue
             
-            if direction == 'h' and col + length <= size:
+            # Input direction
+            direction = input("Enter direction (h for horizontal, v for vertical): ").lower()
+            
+            if direction == 'h':
+                # Check if the ship fits horizontally
+                if col + length > size:
+                    print("The ship doesn't fit horizontally. Try again.")
+                    continue
+                # Check if the positions are free
                 if all(board[row][col + i] == EMPTY_CELL for i in range(length)):
                     for i in range(length):
-                        board[row][col + i] = ship_type
+                        board[row, col + i] = ship_type
                     placed = True
                 else:
                     print("The location is already occupied. Try again.")
-            elif direction == 'v' and row + length <= size:
-                if all(board[row + i][col] == EMPTY_CELL for i in range(length)):
+
+            elif direction == 'v':
+                # Check if the ship fits vertically
+                if row + length > size:
+                    print("The ship doesn't fit vertically. Try again.")
+                    continue
+                # Check if the positions are free
+                if all(board[row + i, col] == EMPTY_CELL for i in range(length)):
                     for i in range(length):
-                        board[row + i][col] = ship_type
+                        board[row + i, col] = ship_type
                     placed = True
                 else:
                     print("The location is already occupied. Try again.")
             else:
-                print("Invalid position or direction. Try again.")
+                print("Invalid direction. Use 'h' for horizontal or 'v' for vertical. Try again.")
         except (ValueError, IndexError):
-            print("Incorrect input! Try again.")
+            print("Incorrect input! Ensure you enter valid numbers and try again.")
 
 # and the program will place them accordingly.
 def place_all_ships_manually(board, ships):
