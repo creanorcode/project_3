@@ -1,12 +1,18 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
+import numpy as np
 import random
+from rich.console import Console
+from rich.table import Table
 
 # Constants for symbols
 EMPTY_CELL = '~'
 HIT_CELL = 'X'
 MISS_CELL = 'O'
+
+# Configure Rich console for output
+console = Console()
 
 #Possible ship types and their length
 POSSIBLE_SHIPS = {
@@ -44,21 +50,30 @@ def choose_ships(size):
 
 # The creation av the board
 def create_board(size):
-    return [[EMPTY_CELL for _ in range(size)] for _ in range(size)]
+    # Create a NumPy board with EMPTY_CELL as the default
+    return np.full((size, size), EMPTY_CELL)
 
-# The board will be printed to the screen
-def print_board(board, reveal=False):
-    size = len(board)
-    print("  " + " ".join(str(i) for i in range(size)))
-    for i, row in enumerate(board):
-        row_display = []
-        for cell in row:
-            row_display.append(cell if reveal or cell in [HIT_CELL, MISS_CELL] else EMPTY_CELL)
-        print(f"{i} " + " ".join(row_display))
+# The board will be displayed to the screen
+def display_board(board, reveal=False):
+    size = board.shape[0]
+    table = Table(show_header=True, header_style="bold cyan")
+    table.add_column(" ")
+    for i in range(size):
+        table.add_column(str(i))
+
+    for row_idx, row in enumerate(board):
+        row_cells = [
+            f"[green]{cell}[/green]" if reveal and cell in ['S', 'D', 'C', 'B'] else
+            ("[red]X[/red]" if cell == HIT_CELL else "[blue]O[/blue]" if cell == MISS_CELL else EMPTY_CELL)
+            for cell in row
+        ]
+        table.add_row(str(row_idx), *row_cells)
+
+    console.print(table)
 
 # Code for placing ships: allows the player to select positions for their ships,
 def place_ship_manually(board, ship_type, length):
-    size = len(board)
+    size = board.shape[0]
     print(f"\nPlace the ship '{ship_type}' which is {length} squares long.")
     placed = False
     while not placed:
@@ -80,7 +95,7 @@ def place_ship_manually(board, ship_type, length):
                     print("The ship doesn't fit horizontally. Try again.")
                     continue
                 # Check if the positions are free
-                if all(board[row][col + i] == EMPTY_CELL for i in range(length)):
+                if all(board[row, col + i] == EMPTY_CELL for i in range(length)):
                     for i in range(length):
                         board[row, col + i] = ship_type
                     placed = True
@@ -107,26 +122,26 @@ def place_ship_manually(board, ship_type, length):
 # and the program will place them accordingly.
 def place_all_ships_manually(board, ships):
     for ship, length in ships.items():
-        print_board(board, reveal=True)
+        display_board(board, reveal=True)
         place_ship_manually(board, ship, length)
 
 # Code for placing the computers ships,
 def place_ship_computer(board, length):
-    size = len(board)
+    size = board.shape[0]
     placed = False
     while not placed:
         direction = random.choice(['horizontal', 'vertical'])
         if direction == 'horizontal':
             row, col = random.randint(0, size - 1), random.randint(0, size - length)
-            if all(board[row][col + i] == EMPTY_CELL for i in range(length)):
+            if all(board[row, col + i] == EMPTY_CELL for i in range(length)):
                 for i in range(length):
-                    board[row][col + i] = 'S'
+                    board[row, col + i] = 'S'
                 placed = True
         else:
             row, col = random.randint(0, size - length), random.randint(0, size - 1)
-            if all(board[row + i][col] == EMPTY_CELL for i in range(length)):
+            if all(board[row + i, col] == EMPTY_CELL for i in range(length)):
                 for i in range(length):
-                    board[row + i][col] = 'S'
+                    board[row + i, col] = 'S'
                 placed = True
 
 # and the program will place the computers ships.
@@ -139,12 +154,12 @@ def player_turn(board):
     print("\nYour turn! Use the format row column (e.g., 2 3)")
     try:
         row, col = map(int, input("Enter row and column: ").split())
-        if board[row][col] in POSSIBLE_SHIPS[5].keys():
-            board[row][col] = HIT_CELL
+        if board[row, col] in POSSIBLE_SHIPS[5].keys():
+            board[row, col] = HIT_CELL
             print("Hit!")
             return True
-        elif board[row][col] == EMPTY_CELL:
-            board[row][col] = MISS_CELL
+        elif board[row, col] == EMPTY_CELL:
+            board[row, col] = MISS_CELL
             print("Miss!")
             return False
         else:
@@ -156,16 +171,16 @@ def player_turn(board):
 
 # Code that handles the computer's turn to choose a target.
 def computer_turn(board):
-    size = len(board)
+    size = board.shape[0]
     row, col = random.randint(0, size - 1), random.randint(0, size - 1)
-    while board[row][col] in [HIT_CELL, MISS_CELL]:
+    while board[row, col] in [HIT_CELL, MISS_CELL]:
         row, col = random.randint(0, size - 1), random.randint(0, size - 1)
-    if board[row][col] in POSSIBLE_SHIPS[5].keys():
-        board[row][col] = HIT_CELL
+    if board[row, col] in POSSIBLE_SHIPS[5].keys():
+        board[row, col] = HIT_CELL
         print(f"The computer hit at {row} {col}!")
         return True
     else:
-        board[row][col] = MISS_CELL
+        board[row, col] = MISS_CELL
         print(f"The computer missed at {row} {col}.")
         return False
 
@@ -193,9 +208,9 @@ def main():
     # The player's board is shown with all ships revealed, while the computer's board hides the ships.
     while True:
         print("\nYour board:")
-        print_board(player_board, reveal=True)
+        display_board(player_board, reveal=True)
         print("\nComputer's board:")
-        print_board(computer_board)
+        display_board(computer_board)
 
         # Checks if the player's turn results in a hit on the computer's board.
         # If the player has hit all of the computer's ships, a winning message is displayed, and the game ends.
