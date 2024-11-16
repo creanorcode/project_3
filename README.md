@@ -33,6 +33,10 @@ This implementation of Battleship allows players to customize their game setup, 
         - **Red cells** mark hits.
         - **Gray cells** indicate misses.
 
+- **Enhanced Validations**
+    - Robust boundary checks ensure ships fit entirely on the board.
+    - Overlapping ships are prevented, and invalid inputs prompt the player to try again.
+
 
 
 
