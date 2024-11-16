@@ -22,6 +22,17 @@ This implementation of Battleship allows players to customize their game setup, 
     - **12x12**: 5–7 ships
   - Ships have varying lengths and types, including destroyers, cruisers, battleships, and submarines.
 
+  - **Interactive Gameplay**
+    - Players manually place their ships on the board by specifying starting coordinates and direction (horizontal or vertical).
+    - Each turn, the player and computer take turnstp target enemy ships.
+
+- **Visual Feedback**
+    - **Rich** provides colorful output in the terminal:
+        - **Blue cells** represent water.
+        - **Green cells** show your own ships.
+        - **Red cells** mark hits.
+        - **Gray cells** indicate misses.
+
 
 
 
