@@ -8,6 +8,8 @@ This implementation of Battleship allows players to customize their game setup, 
 
 ## Features
 
+In this section, we outline the different parts of the project, describing what each provides to the user. The focus is on the player experience and how the features meet their needs.
+
 ### Existing Features
 
 - **Dynamic Board Sizes**
@@ -37,6 +39,34 @@ This implementation of Battleship allows players to customize their game setup, 
     - Robust boundary checks ensure ships fit entirely on the board.
     - Overlapping ships are prevented, and invalid inputs prompt the player to try again.
 
+- **Computer AI**
+  - The computer places its ships strategically and playes against the player with random targeting.
+
+## Gameplay
+
+The game consists of several phases that guide the player through setup and gameplay. Each phase is described below with accompanying examples to illustrate how it looks in the terminal.
+
+### 1. Select board size:
+  - The game will prompt you to select a board size (5x5, 8x8, 10x10 or 12x12).
+
+### 2. Choose number of ships:
+  - Based on the selected board size, you will be asked to choose the number of ships to play with.
+
+## 3. Place ships manually:
+  - Players manually place their ships on the board. For each ship, the player is asked to enter:
+    - **Starting position:** Row and column (e.g., 2 3)
+    - **Direction:** Horizontal (h) or vertical (v).
+  - Ships must fit entirely on the board and cannot overlap with other ships. Boundary checks and validations ensure correct placement.
+
+## 4. Take turns:
+  - The player and computer take turns to target cells on the opponent's board.
+    - **Hit:** If the cell contains part of a ship, it is marked with 'X'.
+    - **Miss:** If the cell is empty, it is marked with 'O'.
+
+## 5. End Game:
+  - The game ends when all ships of one player are sunk.
+  - A victory message is displayed for the winner.
+
 ### Features Left to Implement
 
 - **Save and Load Game**
@@ -45,6 +75,12 @@ This implementation of Battleship allows players to customize their game setup, 
     - Enable two players to compete on the same machine or over a network.
 - **Graphical User Interface**
     - Use Pygame or similar library to create a graphical version of the game.
+
+## Testing
+
+### Validator Testing
+
+- **Python Linter:**
 
 
 
