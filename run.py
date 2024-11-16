@@ -26,7 +26,7 @@ POSSIBLE_SHIPS = {
 def get_board_size():
     while True:
         try:
-            size = int(input("Select the board size (5, 8, 10 or 12): "))
+            size = int(input("Select the board size (5, 8, 10 or 12): \n"))
             if size in POSSIBLE_SHIPS:
                 return size
             else:
@@ -40,7 +40,7 @@ def choose_ships(size):
     min_ships, max_ships = max_ships[size]
     while True:
         try:
-            num_ships = int(input(f"Select the number of ships (between {min_ships} and {max_ships}): "))
+            num_ships = int(input(f"Select the number of ships (between {min_ships} and {max_ships}): \n"))
             if min_ships <= num_ships <= max_ships:
                 return dict(list(POSSIBLE_SHIPS[size].items())[:num_ships])
             else:
@@ -79,7 +79,7 @@ def place_ship_manually(board, ship_type, length):
     while not placed:
         try:
             # Input start position
-            row, col = map(int, input("Enter the starting position for the ship (row column): ").split())
+            row, col = map(int, input("Enter the starting position for the ship (row column): \n").split())
 
             # Check if the start position is within bounds
             if row < 0 or row >= size or col < 0 or col >= size:
@@ -87,7 +87,7 @@ def place_ship_manually(board, ship_type, length):
                 continue
             
             # Input direction
-            direction = input("Enter direction (h for horizontal, v for vertical): ").lower()
+            direction = input("Enter direction (h for horizontal, v for vertical): \n").lower()
             
             if direction == 'h':
                 # Check if the ship fits horizontally
@@ -153,7 +153,7 @@ def place_all_ships_computer(board, ships):
 def player_turn(board):
     print("\nYour turn! Use the format row column (e.g., 2 3)")
     try:
-        row, col = map(int, input("Enter row and column: ").split())
+        row, col = map(int, input("Enter row and column: \n").split())
         if board[row, col] in POSSIBLE_SHIPS[5].keys():
             board[row, col] = HIT_CELL
             print("Hit!")
