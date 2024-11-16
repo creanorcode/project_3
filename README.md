@@ -1,10 +1,33 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+[![Battleship-logga1.webp](https://i.postimg.cc/5tzM1x5j/Battleship-logga1.webp)](https://postimg.cc/nsnWGfPt)
 
-Welcome,
+# Welcome to Battleship
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **May 14, 2024**
+Battleship is a terminal-based implementation of the classic game of strategy and skill. The project is designed for players who enjoy turn-based games and want a fun, interactive challenge. 
 
-## Reminders
+This implementation of Battleship allows players to customize their game setup, including board size and number of ships. It uses Python libraries **NumPy** and **Rich** to enhance performance and improve the user experience with efficient board management and colorful terminal output.
+
+## Features
+
+### Existing Features
+
+- **Dynamic Board Sizes**
+  - Players can choose from four different board sizes: 5x5, 8x8, 10x10, or 12x12.
+  - Each size supports a range of ship counts for optimal gameplay balance.
+
+- **Customizable Ship Setup**
+  - Players can select the number of ships based on the chosen board size:
+    - **5x5**: 2–3 ships
+    - **8x8**: 3–4 ships
+    - **10x10**: 4–5 ships
+    - **12x12**: 5–7 ships
+  - Ships have varying lengths and types, including destroyers, cruisers, battleships, and submarines.
+
+
+
+
+
+
+
 
 - Your code must be placed in the `run.py` file
 - Your dependencies must be placed in the `requirements.txt` file
