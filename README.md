@@ -22,7 +22,7 @@ This implementation of Battleship allows players to customize their game setup, 
     - **12x12**: 5–7 ships
   - Ships have varying lengths and types, including destroyers, cruisers, battleships, and submarines.
 
-  - **Interactive Gameplay**
+- **Interactive Gameplay**
     - Players manually place their ships on the board by specifying starting coordinates and direction (horizontal or vertical).
     - Each turn, the player and computer take turnstp target enemy ships.
 
@@ -36,6 +36,16 @@ This implementation of Battleship allows players to customize their game setup, 
 - **Enhanced Validations**
     - Robust boundary checks ensure ships fit entirely on the board.
     - Overlapping ships are prevented, and invalid inputs prompt the player to try again.
+
+### Features Left to Implement
+
+- **Save and Load Game**
+    - Allow players to save their progress and resume later.
+- **Multiplayer Mode**
+    - Enable two players to compete on the same machine or over a network.
+- **Graphical User Interface**
+    - Use Pygame or similar library to create a graphical version of the game.
+
 
 
 
