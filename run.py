@@ -1,6 +1,6 @@
 """ Battleship Game
 This script implements a terminal-based version of the classic Battleship game.
-It allows players to configure the board size, place ships manually, and compete
+Allows players to configure the board size, place ships manually, and compete
 against a computer opponent. The game uses NumPy for board management and Rich
 for colorful terminal output.
 """
@@ -17,12 +17,12 @@ MISS_CELL = 'O'
 # Configure Rich console for output
 console = Console()
 
-#Possible ship types and their length, based on board size
+# Possible ship types and their length, based on board size
 POSSIBLE_SHIPS = {
-    5: {'S': 1, 'D': 2, 'C': 3}, # 5x5: 2-3 ships, length 1-3
-    8: {'S': 2, 'D': 3, 'C': 4}, # 8x8: 3-4 ships, length 2-4
-    10: {'S': 2, 'D': 3, 'C': 4, 'B': 5}, # 10x10: 4-5 ships, length 2-5
-    12: {'S': 2, 'D': 3, 'C': 4, 'B': 5} # 12x12: 5-7 ships, length 2-5
+    5: {'S': 1, 'D': 2, 'C': 3},  # 5x5: 2-3 ships, length 1-3
+    8: {'S': 2, 'D': 3, 'C': 4},  # 8x8: 3-4 ships, length 2-4
+    10: {'S': 2, 'D': 3, 'C': 4, 'B': 5},  # 10x10: 4-5 ships, length 2-5
+    12: {'S': 2, 'D': 3, 'C': 4, 'B': 5}  # 12x12: 5-7 ships, length 2-5
 }
 
 # Player have to choose a gameboard size.
