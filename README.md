@@ -67,7 +67,7 @@ The game consists of several phases that guide the player through setup and game
   - The game ends when all ships of one player are sunk.
   - A victory message is displayed for the winner.
 
-### Features Left to Implement
+## Features Left to Implement
 
 - **Save and Load Game**
     - Allow players to save their progress and resume later.
@@ -76,41 +76,96 @@ The game consists of several phases that guide the player through setup and game
 - **Graphical User Interface**
     - Use Pygame or similar library to create a graphical version of the game.
 
+## Future Enhancements
+
+### Introduce Data Classes for Ship Management
+- **Description**: Replace multiple function arguments related to ship placement (e.g., `row`, `col`, `length`, `direction`) with a single `Ship` data class. This will group ship-related attributes into a single object.
+- **Benefits**:
+  1. Improves code readability and maintainability by reducing the number of arguments passed to functions.
+  2. Makes the code more scalable for future features, such as adding additional ship attributes like health, name, or type.
+  3. Aligns the code with modern Python practices using `dataclasses`, which provide a lightweight and efficient way to manage related data.
+- **Implementation Plan**:
+  - Define a `Ship` data class with attributes like `row`, `col`, `length`, and `direction`.
+  - Update functions such as `place_ship_on_board` to accept a `Ship` object instead of individual attributes.
+  - Test and validate changes to ensure functionality remains intact.
+
+## Code Quality and Linter Testing
+
+During development, the code was tested using [Pyrfecter.com](https://pyrfecter.com), a Python linter. The linter flagged a complexity issue in the function 'place_ship_manually'. Specifically, it pointed out that the function was too complex due to nested logic and repeated patterns for horizontal and vertical ship placement.
+
+### Refactoring Details
+
+To adress this issue, the function was refactored as follows:
+- **Helper functions** were introduced:
+  - 'is_position_valid': Validates whether the ship fits on the board and does not overlap.
+  - 'place_ship_on_board': Handles the actual placement of the ship on the board.
+- This reduced the number of logical branches in 'place_ship_manually', improving readability and reusability.
+
+After the refactor, the code was re-tested with Pyrfecter, and it passed without any issues.
+
+- The original code: [![place-ship-manually-orig.png](https://i.postimg.cc/rph7R9W0/place-ship-manually-orig.png)](https://postimg.cc/PLwSBYST)
+
+- The refactored code: [![function-refac.png](https://i.postimg.cc/hP6Fps39/function-refac.png)](https://postimg.cc/xcvFdvQC) [![function-refac2.png](https://i.postimg.cc/52ChGzZD/function-refac2.png)](https://postimg.cc/jDR3nDqh)
+
 ## Testing
+
+In this section, we detail the steps and methods used to verify the project's functionality.
 
 ### Validator Testing
 
-- **Python Linter:**
+- **Python Linter:** Used webbased Pyrfecter.com. Verified using 'pylint' in the terminal to ensure code adheres to PEP 8 standards.
+- **Functionality Testing:**
+  - Tested user input validation, including invalid coordinates, out-of bound positions, and overlapping ships.
+  - Confirmed correct behavior for hits, misses and victory conditions.
+- **Accessibility:**
+  - I confirmed the program and site accessible by running it through Lighthouse in devtools.
+  [![Lighthouse-performance.png](https://i.postimg.cc/G3PVkrkn/Lighthouse-performance.png)](https://postimg.cc/grJgWCSg)
+
+### Unfixed Bugs
+
+- None indentified at this stage. The game has been thoroughly tested for edge cases and invalid input scenarios.
+
+## Deployment
+
+- This project was written in Github and deployed to Heroku for easy access and demonstration.
+  - This project was built using the `Code-Institute-Org/p3-template` as a starting point, providing a structured foundation for deployment and configuration.
+    - All code was put in `run.py` and all libraries was installed and listed in `requirements.txt`.
+  - In Heroku a app was created.
+    - Added Config var `PORT`with value `8000`.
+    - Connected my Github account to Heroku and serched for `project_3`.
+    - Did a manual deployment of the project and the app was built.
+
+Here are a link to the game, enjoy! [Battleship](https://battleship-version1-1fd9e9cf7970.herokuapp.com/)
+
+### Local Deployment
+
+1. Clone the repository to your local machine:
+  `git clone https://github.com/creanorcode/project_3`
+
+2. Navigate to the project directory:
+  `cd project_3`
+
+3. Install the required dependencies:
+  `pip install numpy rich`
+
+4. Run the game:
+  `python run.py`
+
+## Credits
+- In this section, we provide acknowledgments for resources and inspiration.
+
+### Content
+- Game rules inspired by the traditional **Battleship** board game.
+- Boundary check improvements and enhanced visuals were added based on user feedback.
+- Libraries, NumPy and Rich
+- Coe Institute template [Code-Institute-Org/p3-template](https://github.com/Code-Institute-Org/p3-template)
+
+### Media
+- The logo-picture in the beginning of this README.md-file was created by a AI service.
+
+## Acknowledgments
+- Special thanks to the creators of NumPy and Rich for making terminal-based games more efficient and visually engaging.
+- Inspiration for structuring this README was drawn from [README.template from Code Institute](https://github.com/Code-Institute-Solutions/readme-template).
 
 
-
-
-
-
-
-
-
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
-
-## Creating the Heroku app
-
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
-
-1. `heroku/python`
-2. `heroku/nodejs`
-
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
-
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
-
-Connect your GitHub repository and deploy as normal.
-
-## Constraints
-
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
-
----
-
-Happy coding!
+Enjoy the game and sink some ships!
