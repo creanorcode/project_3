@@ -52,18 +52,18 @@ The game consists of several phases that guide the player through setup and game
 ### 2. Choose number of ships:
   - Based on the selected board size, you will be asked to choose the number of ships to play with.
 
-## 3. Place ships manually:
+### 3. Place ships manually:
   - Players manually place their ships on the board. For each ship, the player is asked to enter:
     - **Starting position:** Row and column (e.g., 2 3)
     - **Direction:** Horizontal (h) or vertical (v).
   - Ships must fit entirely on the board and cannot overlap with other ships. Boundary checks and validations ensure correct placement.
 
-## 4. Take turns:
+### 4. Take turns:
   - The player and computer take turns to target cells on the opponent's board.
     - **Hit:** If the cell contains part of a ship, it is marked with 'X'.
     - **Miss:** If the cell is empty, it is marked with 'O'.
 
-## 5. End Game:
+### 5. End Game:
   - The game ends when all ships of one player are sunk.
   - A victory message is displayed for the winner.
 

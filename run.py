@@ -1,8 +1,5 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
-import numpy as np
 import random
+import numpy as np
 from rich.console import Console
 from rich.table import Table
 
@@ -14,7 +11,7 @@ MISS_CELL = 'O'
 # Configure Rich console for output
 console = Console()
 
-#Possible ship types and their length
+#Possible ship types and their length, based on board size
 POSSIBLE_SHIPS = {
     5: {'S': 1, 'D': 2, 'C': 3}, # 5x5: 2-3 ships, length 1-3
     8: {'S': 2, 'D': 3, 'C': 4}, # 8x8: 3-4 ships, length 2-4
@@ -71,6 +68,26 @@ def display_board(board, reveal=False):
 
     console.print(table)
 
+def is_position_valid(board, row, col, length, direction):
+    size = board.shape[0]
+    if direction == 'h':
+        if col + length > size:
+            return False
+        return all(board[row, col + i] == EMPTY_CELL for i in range(length))
+    elif direction == 'v':
+        if row + length > size:
+            return False
+        return all(board[row + i, col] == EMPTY_CELL for i in range(length))
+    return False
+
+def place_ship_on_board(board, row, col, length, direction, ship_type):
+    if direction == 'h':
+        for i in range(length):
+            board[row, col + i] = ship_type
+    elif direction == 'v':
+        for i in range(length):
+            board[row + i, col] = ship_type
+
 # Code for placing ships: allows the player to select positions for their ships,
 def place_ship_manually(board, ship_type, length):
     size = board.shape[0]
@@ -85,37 +102,18 @@ def place_ship_manually(board, ship_type, length):
             if row < 0 or row >= size or col < 0 or col >= size:
                 print("The starting position is out of bounds. Try again.")
                 continue
-            
+
             # Input direction
             direction = input("Enter direction (h for horizontal, v for vertical): \n").lower()
-            
-            if direction == 'h':
-                # Check if the ship fits horizontally
-                if col + length > size:
-                    print("The ship doesn't fit horizontally. Try again.")
-                    continue
-                # Check if the positions are free
-                if all(board[row, col + i] == EMPTY_CELL for i in range(length)):
-                    for i in range(length):
-                        board[row, col + i] = ship_type
-                    placed = True
-                else:
-                    print("The location is already occupied. Try again.")
 
-            elif direction == 'v':
-                # Check if the ship fits vertically
-                if row + length > size:
-                    print("The ship doesn't fit vertically. Try again.")
-                    continue
-                # Check if the positions are free
-                if all(board[row + i, col] == EMPTY_CELL for i in range(length)):
-                    for i in range(length):
-                        board[row + i, col] = ship_type
-                    placed = True
-                else:
-                    print("The location is already occupied. Try again.")
-            else:
+            if direction not in ['h', 'v']:
                 print("Invalid direction. Use 'h' for horizontal or 'v' for vertical. Try again.")
+                continue
+            if is_position_valid(board, row, col, length, direction):
+                place_ship_on_board(board, row, col, length, direction, ship_type)
+                placed = True
+            else:
+                print("The ship doesn't fit or the position is occupied. Try again.")
         except (ValueError, IndexError):
             print("Incorrect input! Ensure you enter valid numbers and try again.")
 
@@ -158,13 +156,12 @@ def player_turn(board):
             board[row, col] = HIT_CELL
             print("Hit!")
             return True
-        elif board[row, col] == EMPTY_CELL:
+        if board[row, col] == EMPTY_CELL:
             board[row, col] = MISS_CELL
             print("Miss!")
-            return False
-        else:
-            print("Already used! Try again.")
-            return player_turn(board)
+            return False       
+        print("Already used! Try again.")
+        return player_turn(board)
     except (ValueError, IndexError):
         print("Invalid input! Try again.")
         return player_turn(board)
@@ -178,11 +175,10 @@ def computer_turn(board):
     if board[row, col] in POSSIBLE_SHIPS[5].keys():
         board[row, col] = HIT_CELL
         print(f"The computer hit at {row} {col}!")
-        return True
-    else:
-        board[row, col] = MISS_CELL
-        print(f"The computer missed at {row} {col}.")
-        return False
+        return True    
+    board[row, col] = MISS_CELL
+    print(f"The computer missed at {row} {col}.")
+    return False
 
 # Function to check if all ships have been hit, indicating a win.
 # Returns True if no cells with ships remain on the board.
@@ -205,7 +201,7 @@ def main():
     place_all_ships_computer(computer_board, selected_ships)
 
     # Enters a loop to display both the player's board and the computer's board.
-    # The player's board is shown with all ships revealed, while the computer's board hides the ships.
+    # Player's board is shown with all ships revealed, while the computer's board hides the ships.
     while True:
         print("\nYour board:")
         display_board(player_board, reveal=True)
@@ -213,14 +209,14 @@ def main():
         display_board(computer_board)
 
         # Checks if the player's turn results in a hit on the computer's board.
-        # If the player has hit all of the computer's ships, a winning message is displayed, and the game ends.
+        # If the player has hit all of the computer's ships, message is displayed, the game ends.
         if player_turn(computer_board):
             if check_win(computer_board, selected_ships):
                 print("Congratulations! You have defeated the computer!")
                 break
-        
+
         # Checks if the computer's turn results in a hit on the player's board.
-        # If the computer has hit all of the player's ships, a losing message is displayed, and the game ends.
+        # If the computer has hit all of the player's ships, message is displayed, the game ends.
         if computer_turn(player_board):
             if check_win(player_board, selected_ships):
                 print("The computer won! Better luck next time!")
