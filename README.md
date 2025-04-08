@@ -51,23 +51,46 @@ The game consists of several phases that guide the player through setup and game
 ### 1. Select board size:
   - The game will prompt you to select a board size (5x5, 8x8, 10x10 or 12x12).
 
+  [![Battleship-boardsize.png](https://i.postimg.cc/zB4gwmps/Battleship-boardsize.png)](https://postimg.cc/34CN7cs1)
+
+
 ### 2. Choose number of ships:
   - Based on the selected board size, you will be asked to choose the number of ships to play with.
+
+  [![Battleship-number-Ships.png](https://i.postimg.cc/kG8tfjpB/Battleship-number-Ships.png)](https://postimg.cc/JHrnhQmL)
+
 
 ### 3. Place ships manually:
   - Players manually place their ships on the board. For each ship, the player is asked to enter:
     - **Starting position:** Row and column (e.g., 2 3)
+
+    [![Battleships-place-Ships1.png](https://i.postimg.cc/Jh2DmVws/Battleships-place-Ships1.png)](https://postimg.cc/HJbs4Nkm)
+
     - **Direction:** Horizontal (h) or vertical (v).
+
+    [![Battleship-place-Ships2.png](https://i.postimg.cc/RCnfSFZ4/Battleship-place-Ships2.png)](https://postimg.cc/8sNswTv0)
+
   - Ships must fit entirely on the board and cannot overlap with other ships. Boundary checks and validations ensure correct placement.
+
+  [![Battleship-place-Ships3.png](https://i.postimg.cc/DyrXGMGN/Battleship-place-Ships3.png)](https://postimg.cc/crJCyTX7)
+
 
 ### 4. Take turns:
   - The player and computer take turns to target cells on the opponent's board.
     - **Hit:** If the cell contains part of a ship, it is marked with 'X'.
     - **Miss:** If the cell is empty, it is marked with 'O'.
 
+    [![Battleship-take-Turn2.png](https://i.postimg.cc/L8mZ33B8/Battleship-take-Turn2.png)](https://postimg.cc/w7bv6JGC)
+
+    [![Battleship-take-Turn3.png](https://i.postimg.cc/1ztnLRdx/Battleship-take-Turn3.png)](https://postimg.cc/NK3jXtYb)
+
+
 ### 5. End Game:
   - The game ends when all ships of one player are sunk.
   - A victory message is displayed for the winner.
+
+  [![Battleship-end-Game.png](https://i.postimg.cc/ZKtNCSW3/Battleship-end-Game.png)](https://postimg.cc/23GyKgF8)
+  
 
 ## Features Left to Implement
 
