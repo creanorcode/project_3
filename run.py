@@ -25,13 +25,15 @@ POSSIBLE_SHIPS = {
     12: {'S': 2, 'D': 3, 'C': 4, 'B': 5}  # 12x12: 5-7 ships, length 2-5
 }
 
+
 # Player have to choose a gameboard size.
 def get_board_size():
     """
     Prompt the user to select a board size for the game.
 
     Returns:
-        int: The chosen board size, wich must be one of the predefined sizes (5, 8, 10, 12).
+        int: The chosen board size, wich
+        must be one of the predefined sizes (5, 8, 10, 12).
     """
     while True:
         try:
@@ -43,10 +45,12 @@ def get_board_size():
         except ValueError:
             print("Invalid input! Enter a number between 5 and 12.")
 
+
 # Player choose amont of ships to the boardsize player have chosen.
 def choose_ships(size):
     """
-    Allow the player to choose the number of ships based on the selected board size.
+    Allow the player to choose the number of ships
+    based on the selected board size.
 
     Args:
         size (int): The size of the board.
@@ -58,7 +62,10 @@ def choose_ships(size):
     min_ships, max_ships = max_ships[size]
     while True:
         try:
-            prompt = f"Select the number of ships (between {min_ships} and {max_ships}): \n"
+            prompt = (
+                f"Select the number of ships (between {min_ships} and "
+                f"{max_ships}): \n"
+            )
             num_ships = int(input(prompt))
             if min_ships <= num_ships <= max_ships:
                 return dict(list(POSSIBLE_SHIPS[size].items())[:num_ships])
@@ -66,6 +73,7 @@ def choose_ships(size):
             print(f"Enter a number between {min_ships} and {max_ships}.")
         except ValueError:
             print("Invalid input! Enter an integer.")
+
 
 # The creation av the board
 def create_board(size):
@@ -80,6 +88,7 @@ def create_board(size):
     """
     # Create a NumPy board with EMPTY_CELL as the default
     return np.full((size, size), EMPTY_CELL)
+
 
 # The board will be displayed to the screen
 def display_board(board, reveal=False):
@@ -107,12 +116,14 @@ def display_board(board, reveal=False):
                 cell_display = EMPTY_CELL
 
             row_cells.append(
-                f"[green]{cell}[/green]" if reveal and cell in ['S', 'D', 'C', 'B']
-                    else cell_display
+                f"[green]{cell}[/green]"
+                if reveal and cell in ['S', 'D', 'C', 'B']
+                else cell_display
             )
         table.add_row(str(row_idx), *row_cells)
 
     console.print(table)
+
 
 def is_position_valid(board, row, col, length, direction):
     """
@@ -139,6 +150,7 @@ def is_position_valid(board, row, col, length, direction):
         return all(board[row + i, col] == EMPTY_CELL for i in range(length))
     return False
 
+
 def place_ship_on_board(board, row, col, length, direction, ship_type):
     """
     Place a ship on the board at a specific position.
@@ -158,7 +170,9 @@ def place_ship_on_board(board, row, col, length, direction, ship_type):
         for i in range(length):
             board[row + i, col] = ship_type
 
-# Code for placing ships: allows the player to select positions for their ships,
+
+# Code for placing ships: allows the player to
+# select positions for their ships,
 def place_ship_manually(board, ship_type, length):
     """
     Allow the player to place a ship manually on the board.
@@ -174,7 +188,9 @@ def place_ship_manually(board, ship_type, length):
     while not placed:
         try:
             # Input start position
-            user_input = input("Enter the starting position for the ship (row column): \n")
+            user_input = input(
+                "Enter the starting position for the ship "
+                "(row column): \n")
             row, col = map(int, user_input.split())
 
             # Check if the start position is within bounds
@@ -183,18 +199,36 @@ def place_ship_manually(board, ship_type, length):
                 continue
 
             # Input direction
-            direction = input("Enter direction (h for horizontal, v for vertical): \n").lower()
+            direction = input(
+                "Enter direction (h for horizontal, "
+                "v for vertical): \n").lower()
 
             if direction not in ['h', 'v']:
-                print("Invalid direction. Use 'h' for horizontal or 'v' for vertical. Try again.")
+                print(
+                    "Invalid direction. Use 'h' for horizontal or 'v' "
+                    "for vertical. Try again.")
                 continue
             if is_position_valid(board, row, col, length, direction):
-                place_ship_on_board(board, row, col, length, direction, ship_type)
+                place_ship_on_board(
+                    board,
+                    row,
+                    col,
+                    length,
+                    direction,
+                    ship_type
+                )
                 placed = True
             else:
-                print("The ship doesn't fit or the position is occupied. Try again.")
+                print(
+                    "The ship doesn't fit or the position is occupied. "
+                    "Try again."
+                )
         except (ValueError, IndexError):
-            print("Incorrect input! Ensure you enter valid numbers and try again.")
+            print(
+                "Incorrect input! Ensure you enter valid "
+                "numbers and try again."
+            )
+
 
 # and the program will place them accordingly.
 def place_all_ships_manually(board, ships):
@@ -208,6 +242,7 @@ def place_all_ships_manually(board, ships):
     for ship, length in ships.items():
         display_board(board, reveal=True)
         place_ship_manually(board, ship, length)
+
 
 # Code for placing the computers ships,
 def place_ship_computer(board, length):
@@ -223,17 +258,24 @@ def place_ship_computer(board, length):
     while not placed:
         direction = random.choice(['horizontal', 'vertical'])
         if direction == 'horizontal':
-            row, col = random.randint(0, size - 1), random.randint(0, size - length)
+            row, col = (
+                random.randint(0, size - 1),
+                random.randint(0, size - length)
+            )
             if all(board[row, col + i] == EMPTY_CELL for i in range(length)):
                 for i in range(length):
                     board[row, col + i] = 'S'
                 placed = True
         else:
-            row, col = random.randint(0, size - length), random.randint(0, size - 1)
+            row, col = (
+                random.randint(0, size - length),
+                random.randint(0, size - 1)
+            )
             if all(board[row + i, col] == EMPTY_CELL for i in range(length)):
                 for i in range(length):
                     board[row + i, col] = 'S'
                 placed = True
+
 
 # and the program will place the computers ships.
 def place_all_ships_computer(board, ships):
@@ -247,10 +289,12 @@ def place_all_ships_computer(board, ships):
     for _, length in ships.items():
         place_ship_computer(board, length)
 
+
 # Code that handles the player's turn to choose a target
 def player_turn(board):
     """
-    Allow the player to take a turn by targeting a cell on the opponent's board.
+    Allow the player to take a turn by targeting a
+    cell on the opponent's board.
 
     Args:
         board (numpy.ndarray): The opponent's game board.
@@ -275,10 +319,12 @@ def player_turn(board):
         print("Invalid input! Try again.")
         return player_turn(board)
 
+
 # Code that handles the computer's turn to choose a target.
 def computer_turn(board):
     """
-    Allow the computer to take a turn by targeting a cell on the player's board.
+    Allow the computer to take a turn by targeting a
+    cell on the player's board.
 
     Args:
         board (numpy.ndarray): The player's game board.
@@ -298,6 +344,7 @@ def computer_turn(board):
     print(f"The computer missed at {row} {col}.")
     return False
 
+
 # Function to check if all ships have been hit, indicating a win.
 # Returns True if no cells with ships remain on the board.
 def check_win(board, ships):
@@ -313,8 +360,10 @@ def check_win(board, ships):
     """
     return all(cell not in ships.keys() for row in board for cell in row)
 
+
 # Main function to start the Battleship game.
-# Greets the player, sets the board size, and creates the player and computer boards.
+# Greets the player, sets the board size, and creates
+# the player and computer boards.
 def main():
     """
     Main function to run the Battleship game.
@@ -327,12 +376,15 @@ def main():
     # Selects the ships based on the chosen board size.
     selected_ships = choose_ships(board_size)
 
-    # Places all ships manually on the player's board and automatically on the computer's board.
+    # Places all ships manually on the player's board and automatically
+    # on the computer's board.
     place_all_ships_manually(player_board, selected_ships)
     place_all_ships_computer(computer_board, selected_ships)
 
-    # Enters a loop to display both the player's board and the computer's board.
-    # Player's board is shown with all ships revealed, while the computer's board hides the ships.
+    # Enters a loop to display both the player's board and the
+    # computer's board.
+    # Player's board is shown with all ships revealed, while the computer's
+    # board hides the ships.
     while True:
         print("\nYour board:")
         display_board(player_board, reveal=True)
@@ -340,19 +392,23 @@ def main():
         display_board(computer_board)
 
         # Checks if the player's turn results in a hit on the computer's board.
-        # If the player has hit all of the computer's ships, message is displayed, the game ends.
+        # If the player has hit all of the computer's ships, message is
+        # displayed, the game ends.
         if player_turn(computer_board):
             if check_win(computer_board, selected_ships):
                 print("Congratulations! You have defeated the computer!")
                 break
 
         # Checks if the computer's turn results in a hit on the player's board.
-        # If the computer has hit all of the player's ships, message is displayed, the game ends.
+        # If the computer has hit all of the player's ships, message is
+        # displayed, the game ends.
         if computer_turn(player_board):
             if check_win(player_board, selected_ships):
                 print("The computer won! Better luck next time!")
                 break
 
-# Checks if the script is being run directly and, if so, starts the main function.
+
+# Checks if the script is being run directly and, if so,
+# starts the main function.
 if __name__ == "__main__":
     main()
