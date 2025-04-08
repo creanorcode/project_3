@@ -4,6 +4,8 @@
 
 Battleship is a terminal-based implementation of the classic game of strategy and skill. The project is designed for players who enjoy turn-based games and want a fun, interactive challenge. 
 
+[![Battleship-mockup.png](https://i.postimg.cc/pVScmpvT/Battleship-mockup.png)](https://postimg.cc/4nzQM4mk)
+
 This implementation of Battleship allows players to customize their game setup, including board size and number of ships. It uses Python libraries **NumPy** and **Rich** to enhance performance and improve the user experience with efficient board management and colorful terminal output.
 
 ## Features
