@@ -138,13 +138,37 @@ In this section, we detail the steps and methods used to verify the project's fu
 
 ### Validator Testing
 
-- **Python Linter:** Used webbased Pyrfecter.com. Verified using 'pylint' in the terminal to ensure code adheres to PEP 8 standards.
+- **Python Linter:** Used webbased Pyrfecter.com. Verified using 'pylint' in the terminal to ensure code adheres to PEP 8 standards. Tested the code in Code Institute´s CI Python Linter with no issues.
+
+[![run-py-no-errors.png](https://i.postimg.cc/cC5MZLng/run-py-no-errors.png)](https://postimg.cc/ctw8BZT0)
+
 - **Functionality Testing:**
   - Tested user input validation, including invalid coordinates, out-of bound positions, and overlapping ships.
   - Confirmed correct behavior for hits, misses and victory conditions.
 - **Accessibility:**
   - I confirmed the program and site accessible by running it through Lighthouse in devtools.
   [![Lighthouse-performance.png](https://i.postimg.cc/G3PVkrkn/Lighthouse-performance.png)](https://postimg.cc/grJgWCSg)
+
+### Test plan
+  - This project was verified through a manual testing.
+
+- **Objectives**
+  - Ensure core game mechanics work as intended.
+  - Validate input handling and boundary checks.
+  - Test the game-over logic.
+
+- **Functional Test Scenarios**
+
+| Features                | Testing Method          | Status |
+|-------------------------|-------------------------|--------|
+| Board size selection    | Manual                  | ✅ OK  |
+| Ship count selection    | Manual                  | ✅ OK  |
+| In-bounds placement     | Manual                  | ✅ OK  |
+| Overlapping ships       | Manual                  | ✅ OK  |
+| Player turns (hit/miss) | Manual                  | ✅ OK  |
+| Computer turns          | Manual + random check   | ✅ OK  |
+| Game over logic         | Manual                  | ✅ OK  |
+| Input validation        | Manual                  | ✅ OK  |
 
 ### Unfixed Bugs
 
